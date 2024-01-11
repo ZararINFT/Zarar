@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI in Agriculture</title>
+  <style>
+    :root {
+      --primary-color-light: #ffffff;
+      --secondary-color-light: #f0f0f0;
+      --accent-color-light: #4caf50;
+      --text-color-light: #333333;
+      --link-color-light: #007bff;
+
+      --primary-color-dark: #333333;
+      --secondary-color-dark: #202020;
+      --accent-color-dark: #8e44ad;
+      --text-color-dark: #ffffff;
+      --link-color-dark: #4caf50;
+    }
+
+    body {
+      background-color: var(--primary-color-light);
+      color: var(--text-color-light);
+      font-family: Arial, sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body[data-theme="dark"] {
+      background-color: var(--primary-color-dark);
+      color: var(--text-color-dark);
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background-color: var(--secondary-color-light);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    p {
+      text-align: center;
+    }
+
+    button {
+      padding: 10px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    input {
+      padding: 10px;
+      margin: 10px;
+    }
+  </style>
+</head>
+
+<body onload="updateHeading(); setThemeFromStorage();">
+  <header>
+    <h1 id="greeting">Hello, Guest!</h1>
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <button id="updateNameBtn">Update Name</button>
+    <button onclick="toggleTheme();">Toggle Theme</button>
+  </header>
+
+  <main>
+    <img id="birdImage" src="https://smarttek.solutions/wp-content/uploads/ai-in-agriculture-1170x516.jpg" alt="Pardalote">
+    <p>AI Technology</p>
+	<button onclick="changeBird('Inland Thornbill', 'https://dynamics.folio3.com/blog/wp-content/uploads/2021/03/shutterstock_1213436671.jpg', 'Photographer: Online')">AI App</button>
+	<button onclick="changeBird('Inland Thornbill', 'https://canterbury.ai/wp-content/uploads/2020/10/Scientists-Imagine-a-Dream-World-of-AI-1024x557.jpg', 'Photographer: Online')">AI App</button>
+	<button onclick="changeBird('Inland Thornbill', 'https://dynamics.folio3.com/blog/wp-content/uploads/2021/03/shutterstock_1213436671.jpg', 'Photographer: Online')">AI App</button>
+
+
+  </main>
+
+  <script>
+    function toggleTheme() {
+      const currentTheme = document.body.getAttribute("data-theme") || "light";
+      const newTheme = currentTheme === "light" ? "dark" : "light";
+      document.body.setAttribute("data-theme", newTheme);
+      storeThemeInStorage(newTheme);
+    }
+
+    function storeThemeInStorage(theme) {
+      localStorage.setItem("theme", theme);
+    }
+
+    function setThemeFromStorage() {
+      const storedTheme = localStorage.getItem("theme");
+      if (storedTheme) {
+        document.body.setAttribute("data-theme", storedTheme);
+      }
+    }
+
+    function updateHeading() {
+      const name = getUserNameFromQuery() || getUserNameFromStorage() || "Guest";
+      document.getElementById("greeting").textContent = `Hello, ${name}!`;
+    }
+
+    function getUserNameFromQuery() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get("user_name");
+    }
+
+    function getUserNameFromStorage() {
+      return localStorage.getItem("user_name");
+    }
+
+    function storeUserNameInStorage(name) {
+      localStorage.setItem("user_name", name);
+    }
+
+    function changeBird(name, imageUrl, photographer) {
+      document.getElementById("birdImage").src = imageUrl;
+      document.querySelector("p").textContent = photographer;
+      updateHeading();
+    }
+
+    document.getElementById("updateNameBtn").addEventListener("click", function(event) {
+      event.preventDefault(); // Prevent form submission behavior
+
+      const newName = document.getElementById("nameInput").value;
+      storeUserNameInStorage(newName);
+      updateHeading();
+    });
+  </script>
+</body>
+
+</html>
